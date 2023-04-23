@@ -1,14 +1,30 @@
-<p style="color: green"><%= notice %></p>
+<h1>Список продуктовraisl</h1>
+  <table>
+    <% @products.each do |product| %>
+    <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
 
-<h1>Products</h1>
+      <td>
+        <%= image_tag(product.image_url, class: 'list_image') %>
+      </td>
 
-<div id="products">
-  <% @products.each do |product| %>
-    <%= render product %>
-    <p>
-      <%= link_to "Show this product", product %>
-    </p>
-  <% end %>
-</div>
+      <td class="list_description">
+        <dl>
+          <dt><%= product.title %></dt>
+          <dd><%= truncate(strip_tags(product.description),
+          length: 80) %></dd>
+        </dl>
+      </td>
 
-<%= link_to "New product", new_product_path %>
+      <td class="list_actions">
+        <%= link_to 'Показать', product %><br/>
+        <%= link_to 'Отредактировать', edit_product_path(product) %><br/>
+        <%= link_to 'Удалить', product, method: :delete,
+        data: { confirm: 'Вы уверены??' } %>
+      </td>
+
+      </tr>
+    <% end %>
+  </table>
+
+<br/>
+<%= link_to 'New product', new_product_path %>
